@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Zomato Cart</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/all.css' %}">
+</head>
+<body>
+    <div class="container-fluid">
+        <h1 class="text-danger">Zomato cart:</h1>
+        <p class="lead">
+            <!-- Your placeholder text here -->
+        </p>
+        <a href="https://www.zomato.com/bangalore/restaurants?utm_source=google&utm_medium=cpc&utm_campaign=Gsearch_P-MWeb_O-NA_C-Brand_A-AllUser_SC-Generic_L-SouthIndia-20231122&utm_term=zomato+order&gad_source=1&gclid=CjwKCAiAmZGrBhAnEiwAo9qHid757SPqA6YgoK_HI9fW80T2ZLh7DEP8pGdJ-jTjPc077g6hvd7_3xoC5KgQAvD_BwE" class="btn btn-outline-danger btn-md">Order Now </a>
+    </div>
+    <div class="container-fluid mt-3">
+        <table class="table">
+            <thead class="text-center table-danger">
+                <tr>
+                    <th>S.No</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <tr>
+                    <td>1</td>
+                    <td> <img src="{% static 'images/pizza.jpeg' %}" height="50px"> </td>
+                    <td>Biriyani</td>
+                    <td class="item-price">&#8377;299</td>
+                    <td>
+                        <button class="dec-quantity" data-index="0"><i class="fa-solid fa-circle-plus"></i></button>
+                        <span class="display-quantity">0</span>
+                        <button class="inc-quantity" data-index="0"><i class="fa fa-plus-circle"></i></button>
+                    </td>
+                    <td class="total-price">&#8377;0</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td> <img src="{% static 'images/biriyani.jpeg' %}" height="50px"> </td>
+                    <td>Chicken Kebab</td>
+                    <td class="item-price">&#8377;199</td>
+                    <td>
+                        <button class="dec-quantity" data-index="1"><i class="fa fa-minus-circle"></i></button>
+                        <span class="display-quantity">0</span>
+                        <button class="inc-quantity" data-index="1"><i class="fa fa-plus-circle"></i></button>
+                    </td>
+                    <td class="total-price">&#8377;0</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td> <img src="{% static 'images/cake.jpeg' %}" height="50px"> </td>
+                    <td>MOMO</td>
+                    <td class="item-price">&#8377;89</td>
+                    <td>
+                        <button class="dec-quantity" data-index="2"><i class="fa fa-minus-circle"></i></button>
+                        <span class="display-quantity">0</span>
+                        <button class="inc-quantity" data-index="2"><i class="fa fa-plus-circle"></i></button>
+                    </td>
+                    <td class="total-price">&#8377;0</td>
+                </tr>
+                <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+                <!-- Add similar rows for other items -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        // Get all elements with class names
+        let btnIncQuantityTags = document.querySelectorAll('.inc-quantity');
+        let btnDecQuantityTags = document.querySelectorAll('.dec-quantity');
+        let displayQuantityTags = document.querySelectorAll('.display-quantity');
+        let itemPriceTags = document.querySelectorAll('.item-price');
+        let totalPriceTags = document.querySelectorAll('.total-price');
+
+        // Add event listeners to all quantity buttons
+        btnIncQuantityTags.forEach(btn => {
+            btn.addEventListener('click', () => increaseQuantity(btn));
+        });
+
+        btnDecQuantityTags.forEach(btn => {
+            btn.addEventListener('click', () => decreaseQuantity(btn));
+        });
+
+        function increaseQuantity(btn) {
+            let index = btn.getAttribute('data-index');
+            let quantity = parseInt(displayQuantityTags[index].innerText);
+            quantity++;
+            displayQuantityTags[index].innerText = quantity;
+
+            let itemPrice = parseFloat(itemPriceTags[index].innerText.replace('₹', ''));
+            let totalPrice = quantity * itemPrice;
+            totalPriceTags[index].innerText = '₹' + totalPrice.toFixed(3);
+
+            
+
+        }
+
+        function decreaseQuantity(btn) {
+            let index = btn.getAttribute('data-index');
+            let quantity = parseInt(displayQuantityTags[index].innerText);
+            if (quantity > 0) {
+                quantity--;
+                displayQuantityTags[index].innerText = quantity;
+
+                let itemPrice = parseFloat(itemPriceTags[index].innerText.replace('₹', ''));
+                let totalPrice = quantity * itemPrice;
+                totalPriceTags[index].innerText = '₹' + totalPrice.toFixed(3);
+            }
+        }
+    </script>
+</body>
+</html>
